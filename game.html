@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,21 +45,65 @@
             bottom: 20px;
             left: 200px;
         }
+        .dragging {
+            opacity: 0.5;
+        }
     </style>
-      <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let button = document.getElementById("button");
-        let bulb = document.getElementById("bulb");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let button = document.getElementById("button");
+            let bulb = document.getElementById("bulb");
+            let battery = document.getElementById("battery");
 
-        button.addEventListener("mousedown", function () {
-            bulb.style.backgroundColor = "orange"; // ไฟติด
-        });
+            let isConnected = false;
 
-        button.addEventListener("mouseup", function () {
-            bulb.style.backgroundColor = "yellow"; // ไฟดับ
+            // ฟังก์ชันการลากและปล่อย
+            function makeDraggable(element) {
+                element.addEventListener("mousedown", function (e) {
+                    let offsetX = e.clientX - element.getBoundingClientRect().left;
+                    let offsetY = e.clientY - element.getBoundingClientRect().top;
+
+                    element.classList.add("dragging");
+
+                    function dragMove(e) {
+                        element.style.left = `${e.clientX - offsetX}px`;
+                        element.style.top = `${e.clientY - offsetY}px`;
+                    }
+
+                    function dragEnd() {
+                        document.removeEventListener("mousemove", dragMove);
+                        document.removeEventListener("mouseup", dragEnd);
+                        element.classList.remove("dragging");
+
+                        // เช็คการเชื่อมต่อ
+                        if (isNearConnection(element, bulb)) {
+                            bulb.style.backgroundColor = "orange"; // ไฟติด
+                            isConnected = true;
+                        } else {
+                            bulb.style.backgroundColor = "yellow"; // ไฟดับ
+                            isConnected = false;
+                        }
+                    }
+
+                    document.addEventListener("mousemove", dragMove);
+                    document.addEventListener("mouseup", dragEnd);
+                });
+            }
+
+            // ฟังก์ชันตรวจสอบว่าองค์ประกอบใกล้กันพอที่จะเชื่อมต่อได้
+            function isNearConnection(element1, element2) {
+                let rect1 = element1.getBoundingClientRect();
+                let rect2 = element2.getBoundingClientRect();
+
+                return rect1.right > rect2.left && rect1.left < rect2.right &&
+                    rect1.bottom > rect2.top && rect1.top < rect2.bottom;
+            }
+
+            // ทำให้แบตเตอรี่และหลอดไฟสามารถลากได้
+            makeDraggable(battery);
+            makeDraggable(bulb);
         });
-    });
-      </script>
+    </script>
 </head>
 <body>
 
@@ -70,19 +114,6 @@
         <div id="bulb" class="component"></div>
         <div id="battery" class="component"></div>
         <div id="button" class="component"></div>
-    </div>
-
-</body>
-</html>
-    </style>
-</head>
-<body>
-
-    <h1>เกมต่อวงจรไฟฟ้า</h1>
-    <p>ลากแบตเตอรี่และสายไฟมาต่อให้วงจรสมบูรณ์</p>
-    
-    <div id="game-area">
-        <div id="bulb" class="component"></div>
     </div>
 
 </body>
