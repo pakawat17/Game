@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมต่อวงจรไฟฟ้า</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        #game-area {
+            width: 90%;
+            max-width: 600px;
+            height: 400px;
+            background-color: white;
+            margin: auto;
+            border: 2px solid black;
+            position: relative;
+        }
+        .component {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            cursor: grab;
+        }
+        #bulb {
+            background-color: yellow;
+            border-radius: 50%;
+            top: 50px;
+            left: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>เกมต่อวงจรไฟฟ้า</h1>
+    <p>ลากแบตเตอรี่และสายไฟมาต่อให้วงจรสมบูรณ์</p>
+    
+    <div id="game-area">
+        <div id="bulb" class="component"></div>
+    </div>
+
+</body>
+</html>
