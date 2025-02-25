@@ -46,6 +46,20 @@
             left: 200px;
         }
     </style>
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let button = document.getElementById("button");
+        let bulb = document.getElementById("bulb");
+
+        button.addEventListener("mousedown", function () {
+            bulb.style.backgroundColor = "orange"; // ไฟติด
+        });
+
+        button.addEventListener("mouseup", function () {
+            bulb.style.backgroundColor = "yellow"; // ไฟดับ
+        });
+    });
+      </script>
 </head>
 <body>
 
